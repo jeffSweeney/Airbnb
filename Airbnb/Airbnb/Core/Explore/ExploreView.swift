@@ -25,4 +25,5 @@ struct ExploreView: View {
 
 #Preview {
     ExploreView()
+        
 }
