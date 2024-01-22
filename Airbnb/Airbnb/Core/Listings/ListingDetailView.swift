@@ -66,11 +66,30 @@ struct ListingDetailView: View {
             Divider()
             
             // MARK: Listing Features
-            Text("TODO: Implement")
+            VStack(alignment: .leading, spacing: 16) {
+                ForEach(ListingFeature.MOCK_FEATURES, id: \.self) { feature in
+                    HStack(spacing: 16) {
+                        Image(systemName: feature.sfSymbolName)
+                        
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(feature.title)
+                                .font(.footnote)
+                                .fontWeight(.bold)
+                            
+                            Text(feature.subtitle)
+                                .font(.caption)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.75)
+                        }
+                    }
+                }
+            }
+            .modifier(LeadingEdgeModifier())
+            .padding(.vertical)
             
             Divider()
             
-            // MARK: Listing Configurations
+            // MARK: Listing Features
             Text("TODO: Implement")
         }
         .ignoresSafeArea()
@@ -79,5 +98,21 @@ struct ListingDetailView: View {
 
 #Preview {
     ListingDetailView()
-        .preferredColorScheme(.dark)
+//        .preferredColorScheme(.dark)
+}
+
+// MARK: MOCK data
+struct ListingFeature: Hashable {
+    let sfSymbolName: String
+    let title: String
+    let subtitle: String
+    
+    static var MOCK_FEATURES: [Self] = [
+        .init(sfSymbolName: "door.left.hand.open",
+              title: "Self check-in",
+              subtitle: "Check yourself in with the keypad."),
+        .init(sfSymbolName: "medal",
+              title: "Superhost",
+              subtitle: "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.")
+    ]
 }
