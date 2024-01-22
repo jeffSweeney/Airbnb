@@ -89,8 +89,46 @@ struct ListingDetailView: View {
             
             Divider()
             
-            // MARK: Listing Features
-            Text("TODO: Implement")
+            // MARK: Listing Bedrooms
+            VStack(alignment: .leading) {
+                Text("Where you'll sleep")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                
+                ScrollView(.horizontal) {
+                    HStack(spacing: 16) {
+                        ForEach(1 ... 4, id: \.self) { bedroom in
+                            BedroomCard(bedroomNumber: bedroom)
+                        }
+                    }
+                }
+                .scrollIndicators(.hidden)
+            }
+            .modifier(LeadingEdgeModifier())
+            .padding(.vertical)
+            
+            Divider()
+            
+            // MARK: Listing Offers
+            VStack(alignment: .leading, spacing: 12) {
+                Text("What this place offers")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                
+                ForEach(ListingOffer.MOCK_OFFERS, id: \.self) { offer in
+                    HStack {
+                        Image(systemName: offer.sfSymbolName)
+                            .frame(width: 30)
+                        
+                        Text(offer.offer)
+                    }
+                }
+
+            }
+            .modifier(LeadingEdgeModifier())
+            .padding(.vertical)
+            
+            Divider()
         }
         .ignoresSafeArea()
     }
@@ -101,18 +139,52 @@ struct ListingDetailView: View {
 //        .preferredColorScheme(.dark)
 }
 
-// MARK: MOCK data
+// MARK: - Subviews
+struct BedroomCard: View {
+    let bedroomNumber: Int
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Image(systemName: "bed.double")
+            
+            Text("Bedroom \(bedroomNumber)")
+                .font(.caption)
+                .fontWeight(.semibold)
+        }
+        .padding()
+        .frame(width: 140, height: 90, alignment: .leading)
+        .overlay {
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(lineWidth: 0.5)
+        }
+    }
+}
+
+// MARK: MOCK data Models
 struct ListingFeature: Hashable {
     let sfSymbolName: String
     let title: String
     let subtitle: String
     
-    static var MOCK_FEATURES: [Self] = [
+    static let MOCK_FEATURES: [Self] = [
         .init(sfSymbolName: "door.left.hand.open",
               title: "Self check-in",
               subtitle: "Check yourself in with the keypad."),
         .init(sfSymbolName: "medal",
               title: "Superhost",
               subtitle: "Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.")
+    ]
+}
+
+struct ListingOffer: Hashable {
+    let sfSymbolName: String
+    let offer: String
+    
+    static let MOCK_OFFERS: [Self] = [
+        .init(sfSymbolName: "wifi", offer: "Wifi"),
+        .init(sfSymbolName: "checkerboard.shield", offer: "Alarm System"),
+        .init(sfSymbolName: "building", offer: "Balcony"),
+        .init(sfSymbolName: "washer", offer: "Laundry"),
+        .init(sfSymbolName: "tv", offer: "TV"),
     ]
 }
