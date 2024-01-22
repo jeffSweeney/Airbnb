@@ -121,6 +121,8 @@ struct ListingDetailView: View {
                             .frame(width: 30)
                         
                         Text(offer.offer)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
                     }
                 }
 
