@@ -5,6 +5,7 @@
 //  Created by Jeffrey Sweeney on 1/21/24.
 //
 
+import MapKit
 import SwiftUI
 
 struct ListingDetailView: View {
@@ -126,6 +127,22 @@ struct ListingDetailView: View {
                     }
                 }
 
+            }
+            .modifier(LeadingEdgeModifier())
+            .padding(.vertical)
+            
+            Divider()
+            
+            // MARK: Listing Location
+            VStack(alignment: .leading) {
+                Text("Where you'll be")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                
+                Map()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
             }
             .modifier(LeadingEdgeModifier())
             .padding(.vertical)
