@@ -9,10 +9,34 @@ import MapKit
 import SwiftUI
 
 struct ListingDetailView: View {
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
+    
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 25.7617,
+                                                                                  longitude: -80.1918),
+                                                   span: MKCoordinateSpan(latitudeDelta: 0.05,
+                                                                          longitudeDelta: 0.05))
+    
     var body: some View {
         ScrollView {
             // MARK: Carousel
-            ListingImageCarouselView(height: 320)
+            ZStack(alignment: .topLeading) {
+                ListingImageCarouselView(height: 320)
+                
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.black)
+                        .background {
+                            Circle()
+                                .fill(.white)
+                                .frame(width: 32, height: 32)
+                        }
+                        .padding(32)
+                }
+
+            }
             
             // MARK: Listing & Reviews
             VStack(alignment: .leading, spacing: 8) {
@@ -104,6 +128,7 @@ struct ListingDetailView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
+                .scrollTargetBehavior(.paging)
             }
             .modifier(LeadingEdgeModifier())
             .padding(.vertical)
@@ -134,28 +159,64 @@ struct ListingDetailView: View {
             Divider()
             
             // MARK: Listing Location
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 16) {
                 Text("Where you'll be")
                     .font(.headline)
                     .fontWeight(.bold)
                 
-                Map()
+                Map(coordinateRegion: $region)
                     .frame(maxWidth: .infinity)
                     .frame(height: 200)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             }
             .modifier(LeadingEdgeModifier())
             .padding(.vertical)
-            
-            Divider()
         }
         .ignoresSafeArea()
+        .scrollIndicators(.hidden)
+        .padding(.bottom, 64)
+        .overlay(alignment: .bottom) {
+            VStack {
+                Divider()
+                    .padding(.bottom)
+                
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("$500")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        
+                        Text("Total before taxes")
+                            .font(.footnote)
+                        
+                        Text("Oct 15 - 20")
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .underline()
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {}, label: {
+                        Text("Reserve")
+                            .foregroundStyle(.white)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .frame(width: 140, height: 40)
+                            .background(.pink)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    })
+                }
+                .padding(.horizontal, 32)
+            }
+            .background(colorScheme == .dark ? .black : .white)
+        }
     }
 }
 
 #Preview {
     ListingDetailView()
-//        .preferredColorScheme(.dark)
+        .preferredColorScheme(.dark)
 }
 
 // MARK: - Subviews

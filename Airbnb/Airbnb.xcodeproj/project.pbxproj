@@ -79,7 +79,6 @@
 				E01E43062B5D9E9000C93B28 /* Extensions */,
 				E01E43052B5D9E8E00C93B28 /* Models */,
 				E01E43042B5D9E8100C93B28 /* Utils */,
-				E01E42F82B5D9E3A00C93B28 /* ContentView.swift */,
 				E01E42FA2B5D9E3B00C93B28 /* Assets.xcassets */,
 				E01E42FC2B5D9E3B00C93B28 /* Preview Content */,
 			);
@@ -174,6 +173,7 @@
 		E01E430D2B5D9EE800C93B28 /* Root */ = {
 			isa = PBXGroup;
 			children = (
+				E01E42F82B5D9E3A00C93B28 /* ContentView.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
